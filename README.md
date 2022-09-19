@@ -1,2 +1,3 @@
 # Turtle-Shell
-Simple Unixly shell
+Simple Unixly shell written in C
+Composed by Maxwell Wang
