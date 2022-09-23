@@ -1,17 +1,13 @@
+#include "sh.h"
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(){
+void sig_hander(int signal);
+
+int main(int argc, char** argv, char** envp){
     printf("My name is Walter Hartwell  White");
-    //This loop prints a prompt (prefix).
-    //Initially a blank space followed by[cwd]>
-    //cwd is the current working directory
-    //This will execute commands until exit is entered
-    //
-    //The loop will check if a command is a built in command.
-    //If it is not, the [command]: Command not found. is printed.
+    return sh(argc,argv,envp);
+}
 
-
-    //Each command supports arguments using an argv array.
-    return 0;
+void sig_handler(int signal) {
 }
