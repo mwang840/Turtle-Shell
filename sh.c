@@ -42,23 +42,30 @@ int sh( int argc, char **argv, char **envp )
   while ( go )
   {
     /* print your prompt */
-	printf("%s[%s]> ",prompt,pwd);
+	if (strcmp(prompt," ") == 0) printf(" [%s]> ",pwd);
+    	else printf("%s [%s]> ",prompt,pwd);
+
     /* get command line and process */
 	fgets(commandline,MAX_CANON,stdin);
     	commandline[strcspn(commandline,"\n")] = 0;
     	command = strtok(commandline," ");
 
-    	printf("Command: %s\n",command);
+    	//printf("Command: %s\n",command);
     	command = strtok(NULL, " ");
-    	int i = 0;
+    	i = 0;
     	while (command != NULL) {
       	    args[i] = command;
-            printf("Arg %d: %s\n",i+1,command);
+            //printf("Arg %d: %s\n",i+1,command);
       	    command = strtok(NULL, " ");
       	    i++;
    	}
     /* check for each built in command and implement */
-
+    	command = strtok(commandline," ");
+    	if (strcmp(command,"prompt") == 0) {
+    	    printf("Input prompt prefix: ");
+    	    fgets(prompt,PROMPTMAX,stdin);
+    	    prompt[strcspn(prompt,"\n")] = 0;
+    	}
      /*  else  program to exec */
     {
        /* find it */
