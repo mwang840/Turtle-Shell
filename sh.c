@@ -86,6 +86,7 @@ int sh( int argc, char **argv, char **envp )
 	}
 	else if (strcmp(command,"pwd") == 0)
 	{
+	    printf("%s\n",pwd);
 	}
 	else if (strcmp(command,"list") == 0)
 	{
