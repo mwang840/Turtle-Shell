@@ -114,6 +114,7 @@ char *which(char *command, struct pathelement *pathlist )
     }
     p = p->next;
    }
+   //Free findCommand OR put findCommand on the stack.
    return NULL;
 
 } /* which() */
