@@ -75,6 +75,27 @@ int sh( int argc, char **argv, char **envp )
 	    args[0] = NULL;
 	    args[1] = NULL;
 	}
+	else if (strcmp(command,"where") == 0)
+	{
+	    //where(args[0],args[1]);
+	    args[0] = NULL;
+	    args[1] = NULL;
+	}
+	else if (strcmp(command,"cd") == 0)
+	{
+	}
+	else if (strcmp(command,"pwd") == 0)
+	{
+	}
+	else if (strcmp(command,"list") == 0)
+	{
+	}
+	else if (strcmp(command,"pid") == 0)
+	{
+	}
+	else if (strcmp(command,"kill") == 0)
+	{
+	}
 	else if (strcmp(command,"prompt") == 0)
 	{
 	    if (args[0]) {
@@ -87,6 +108,12 @@ int sh( int argc, char **argv, char **envp )
     	        prompt[strcspn(prompt,"\n")] = 0;
 		args[0] = NULL;
     	}
+	else if (strcmp(command,"printenv") == 0)
+	{
+	}
+	else if (strcmp(command,"setenv") == 0)
+	{
+	}
      /*  else  program to exec */
     {
        /* find it */
@@ -122,6 +149,19 @@ char *which(char *command, struct pathelement *pathlist )
 char *where(char *command, struct pathelement *pathlist )
 {
   /* similarly loop through finding all locations of command */
+  /*char cmd[128];
+  char list[128][128];
+  int ind = 0;
+  struct pathelement* p=pathlist;
+  while (p) {
+   sprintf(cmd, "%s/gcc", p->element);
+   if (access(cmd, F_OK) == 0) {
+     list[ind] = cmd;
+     ind++;
+   }
+   p = p->next;
+  }*/
+
 } /* where() */
 
 void list ( char *dir )
