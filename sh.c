@@ -85,6 +85,7 @@ int sh( int argc, char **argv, char **envp )
   return 0;
 } /* sh() */
 
+//Wrote the which functionality with the help of the Professor
 char *which(char *command, struct pathelement *pathlist )
 {
    /* loop through pathlist until finding command and return it.  Return
