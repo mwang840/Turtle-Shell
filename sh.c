@@ -61,7 +61,21 @@ int sh( int argc, char **argv, char **envp )
    	}
     /* check for each built in command and implement */
     	command = strtok(commandline," ");
-    	if (strcmp(command,"prompt") == 0)
+	if (strcmp(command,"exit") == 0)
+	{
+	    free(prompt);
+	    free(commandline);
+	    free(args);
+	    free(owd);
+	    go = 0;
+	}
+	else if (strcmp(command,"which") == 0)
+	{
+	//  which(args[0],args[1]);
+	    args[0] = NULL;
+	    args[1] = NULL;
+	}
+	else if (strcmp(command,"prompt") == 0)
 	{
 	    if (args[0]) {
 		prompt = args[0];
