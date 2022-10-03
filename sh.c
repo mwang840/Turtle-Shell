@@ -61,10 +61,17 @@ int sh( int argc, char **argv, char **envp )
    	}
     /* check for each built in command and implement */
     	command = strtok(commandline," ");
-    	if (strcmp(command,"prompt") == 0) {
-    	    printf("Input prompt prefix: ");
-    	    fgets(prompt,PROMPTMAX,stdin);
-    	    prompt[strcspn(prompt,"\n")] = 0;
+    	if (strcmp(command,"prompt") == 0)
+	{
+	    if (args[0]) {
+		prompt = args[0];
+	    }
+	    else {
+    	        printf("Input prompt prefix: ");
+    	        fgets(prompt,PROMPTMAX,stdin);
+	    }
+    	        prompt[strcspn(prompt,"\n")] = 0;
+		args[0] = NULL;
     	}
      /*  else  program to exec */
     {
@@ -106,5 +113,3 @@ void list ( char *dir )
   /* see man page for opendir() and readdir() and print out filenames for
   the directory passed */
 } /* list() */
-
-
