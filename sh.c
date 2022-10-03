@@ -82,6 +82,17 @@ char *which(char *command, struct pathelement *pathlist )
 {
    /* loop through pathlist until finding command and return it.  Return
    NULL when not found. */
+   char *findCommand = (char*)malloc(sizeof(char)*1024);
+   struct pathelement* p=pathlist;
+   while(p != NULL){
+    sprintf(findCommand,"%s/%s",p->element,command);
+    if (access(findCommand,X_OK)==0){
+      printf("%s\n",findCommand);
+      return findCommand;
+    }
+    p = p->next;
+   }
+   return NULL;
 
 } /* which() */
 
