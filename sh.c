@@ -9,6 +9,8 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <signal.h>
+#include <stdbool.h>
+#include "get_path.h"
 #include "sh.h"
 
 int sh( int argc, char **argv, char **envp )
@@ -90,24 +92,40 @@ char *which(char *command, struct pathelement *pathlist )
 {
    /* loop through pathlist until finding command and return it.  Return
    NULL when not found. */
-   char *findCommand = (char*)malloc(sizeof(char)*1024);
-   struct pathelement* p=pathlist;
+   char *findCommand = (char*)malloc((sizeof(char) * 100) + 1);
+   //Sets a flag variable
+   bool foundCommand = false;
+   struct pathelement* p = pathlist;
+   
    while(p != NULL){
     sprintf(findCommand,"%s/%s",p->element,command);
     if (access(findCommand,X_OK)==0){
+      foundCommand = true;
       printf("%s\n",findCommand);
       return findCommand;
     }
-    p = p->next;
+    else{
+      p = p->next;
+    }
    }
-   return NULL;
+   free(findCommand);
+   if(foundCommand == false){
+    return "Error, command cannot be found, please try it again!";
+   }
 
 } /* which() */
 
 char *where(char *command, struct pathelement *pathlist )
 {
+  char *findLoaction;
+  struct pathelement *p = pathlist;
+  while(p != NULL){
+    sprintf(findLoaction, "%s/%s", p->element, command);
+  }
+  return NULL;
   /* similarly loop through finding all locations of command */
 } /* where() */
+
 
 void list ( char *dir )
 {
