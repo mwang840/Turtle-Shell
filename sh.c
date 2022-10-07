@@ -52,13 +52,10 @@ int sh( int argc, char **argv, char **envp )
 	fgets(commandline,MAX_CANON,stdin);
     	commandline[strcspn(commandline,"\n")] = 0;
     	command = strtok(commandline," ");
-
-    	//printf("Command: %s\n",command);
-    	command = strtok(NULL, " ");
     	i = 0;
     	while (command != NULL) {
       	    args[i] = command;
-            //printf("Arg %d: %s\n",i+1,command);
+            printf("Arg %d: %s\n",i+1,command);
       	    command = strtok(NULL, " ");
       	    i++;
    	}
