@@ -52,9 +52,6 @@ int sh( int argc, char **argv, char **envp )
 	fgets(commandline,MAX_CANON,stdin);
     	commandline[strcspn(commandline,"\n")] = 0;
     	command = strtok(commandline," ");
-
-    	//printf("Command: %s\n",command);
-    	command = strtok(NULL, " ");
     	i = 0;
     	while (command != NULL) {
       	    args[i] = command;
@@ -103,36 +100,43 @@ int sh( int argc, char **argv, char **envp )
 	}
 	else if (strcmp(command,"prompt") == 0)
 	{
-	    if (args[0]) {
-		prompt = args[0];
+	    if (args[1]) {
+		prompt = args[1];
 	    }
 	    else {
     	        printf("Input prompt prefix: ");
     	        fgets(prompt,PROMPTMAX,stdin);
 	    }
     	        prompt[strcspn(prompt,"\n")] = 0;
-		args[0] = NULL;
+		args[1] = NULL;
     	}
 	else if (strcmp(command,"printenv") == 0)
 	{
+	    while(*envp != 0) {
+		char* temp = *envp;
+		printf("%s\n",temp);
+		envp++;
+	    }
 	}
 	else if (strcmp(command,"setenv") == 0)
 	{
 	}
      /*  else  program to exec */
-    {
        /* find it */
        /* do fork(), execve() and waitpid() */
-
-      /* else */
-        /* fprintf(stderr, "%s: Command not found.\n", args[0]); */
-    }
+	else {
+            fprintf(stderr, "%s: Command not found.\n", args[0]);
+	}
   }
   return 0;
 } /* sh() */
 
 //Wrote the which functionality with the help of the Professor
 char *which(char *command, struct pathelement *pathlist )
+	/*
+	 * Which allocates memory and frees it in the function.
+	 * It takes in a command (string) and a path struct.
+	 */
 {
    /* loop through pathlist until finding command and return it.  Return
    NULL when not found. */
@@ -160,6 +164,10 @@ char *which(char *command, struct pathelement *pathlist )
 } /* which() */
 
 char *where(char *command, struct pathelement *pathlist )
+	/*
+	 * Where allocates memory.
+	 * It takes in a command (string) and a path struct
+	 */
 {
   char *findLoaction = (char*)malloc((sizeof(char) * 100) + 1);
   struct pathelement *p = pathlist;
@@ -179,6 +187,9 @@ char *where(char *command, struct pathelement *pathlist )
 
 
 void list ( char *dir )
+	/*
+	 * Takes in a directory (string)
+	 */
 {
   DIR *direct = opendir(dir);
   struct dirent *theFile = readdir(direct);
