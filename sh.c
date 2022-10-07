@@ -55,7 +55,7 @@ int sh( int argc, char **argv, char **envp )
     	i = 0;
     	while (command != NULL) {
       	    args[i] = command;
-            printf("Arg %d: %s\n",i+1,command);
+            //printf("Arg %d: %s\n",i+1,command);
       	    command = strtok(NULL, " ");
       	    i++;
    	}
@@ -71,15 +71,9 @@ int sh( int argc, char **argv, char **envp )
 	}
 	else if (strcmp(command,"which") == 0)
 	{
-	//  which(args[0],args[1]);
-	    args[0] = NULL;
-	    args[1] = NULL;
 	}
 	else if (strcmp(command,"where") == 0)
 	{
-	    //where(args[0],args[1]);
-	    args[0] = NULL;
-	    args[1] = NULL;
 	}
 	else if (strcmp(command,"cd") == 0)
 	{
@@ -99,15 +93,15 @@ int sh( int argc, char **argv, char **envp )
 	}
 	else if (strcmp(command,"prompt") == 0)
 	{
-	    if (args[0]) {
-		prompt = args[0];
+	    if (args[1]) {
+		prompt = args[1];
 	    }
 	    else {
     	        printf("Input prompt prefix: ");
     	        fgets(prompt,PROMPTMAX,stdin);
 	    }
     	        prompt[strcspn(prompt,"\n")] = 0;
-		args[0] = NULL;
+		args[1] = NULL;
     	}
 	else if (strcmp(command,"printenv") == 0)
 	{
@@ -181,6 +175,9 @@ char *where(char *command, struct pathelement *pathlist )
 
 
 void list ( char *dir )
+	/*
+	 * Takes in a directory (string)
+	 */
 {
   DIR *direct = opendir(dir);
   struct dirent *theFile = readdir(direct);
