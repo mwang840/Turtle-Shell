@@ -87,6 +87,7 @@ int sh( int argc, char **argv, char **envp )
 	}
 	else if (strcmp(command,"pid") == 0)
 	{
+	    printf("%d\n",getpid());
 	}
 	else if (strcmp(command,"kill") == 0)
 	{
