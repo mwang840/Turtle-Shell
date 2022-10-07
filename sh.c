@@ -10,7 +10,8 @@
 #include <sys/wait.h>
 #include <signal.h>
 #include <stdbool.h>
-#include "get_path.h"
+#include <dirent.h>
+#include <limits.h>
 #include "sh.h"
 
 int sh( int argc, char **argv, char **envp )
@@ -159,10 +160,16 @@ char *which(char *command, struct pathelement *pathlist )
 
 char *where(char *command, struct pathelement *pathlist )
 {
-  char *findLoaction;
+  char *findLoaction = (char*)malloc((sizeof(char) * 100) + 1);
   struct pathelement *p = pathlist;
   while(p != NULL){
-    sprintf(findLoaction, "%s/%s", p->element, command);
+    snprintf(findLoaction, 100, "%s/%s", p->element, command);
+    if(access(findLoaction, X_OK) == 0){
+      int pathLen = strlen(findLoaction);
+      char *iFoundTheLocation = calloc(pathLen + 1, sizeof(char));
+      strncpy(iFoundTheLocation, findLoaction, pathLen);
+    }
+    p = p->next;
   }
   return NULL;
   /* similarly loop through finding all locations of command */
@@ -184,6 +191,14 @@ char *where(char *command, struct pathelement *pathlist )
 
 void list ( char *dir )
 {
+  DIR *direct = opendir(dir);
+  struct dirent *theFile = readdir(direct);
+  if(direct != NULL){
+    while((theFile) != NULL){
+      printf("%s\n", theFile->d_name);
+    }
+  }
+  closedir(direct);
   /* see man page for opendir() and readdir() and print out filenames for
   the directory passed */
 } /* list() */
