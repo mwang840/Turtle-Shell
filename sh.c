@@ -106,18 +106,21 @@ int sh( int argc, char **argv, char **envp )
     	}
 	else if (strcmp(command,"printenv") == 0)
 	{
+	    while(*envp != 0) {
+		char* temp = *envp;
+		printf("%s\n",temp);
+		envp++;
+	    }
 	}
 	else if (strcmp(command,"setenv") == 0)
 	{
 	}
      /*  else  program to exec */
-    {
        /* find it */
        /* do fork(), execve() and waitpid() */
-
-      /* else */
-        /* fprintf(stderr, "%s: Command not found.\n", args[0]); */
-    }
+	else {
+            fprintf(stderr, "%s: Command not found.\n", args[0]);
+	}
   }
   return 0;
 } /* sh() */
