@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+//This project was done by Maxwell Wang and Blair Felker
+
 void sig_hander(int signal);
 
 int main(int argc, char** argv, char** envp){
