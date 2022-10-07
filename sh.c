@@ -129,6 +129,10 @@ int sh( int argc, char **argv, char **envp )
 
 //Wrote the which functionality with the help of the Professor
 char *which(char *command, struct pathelement *pathlist )
+	/*
+	 * Which allocates memory and frees it in the function.
+	 * It takes in a command (string) and a path struct.
+	 */
 {
    /* loop through pathlist until finding command and return it.  Return
    NULL when not found. */
@@ -156,6 +160,10 @@ char *which(char *command, struct pathelement *pathlist )
 } /* which() */
 
 char *where(char *command, struct pathelement *pathlist )
+	/*
+	 * Where allocates memory.
+	 * It takes in a command (string) and a path struct
+	 */
 {
   char *findLoaction = (char*)malloc((sizeof(char) * 100) + 1);
   struct pathelement *p = pathlist;
@@ -169,20 +177,6 @@ char *where(char *command, struct pathelement *pathlist )
     p = p->next;
   }
   return NULL;
-  /* similarly loop through finding all locations of command */
-  /*char cmd[128];
-  char list[128][128];
-  int ind = 0;
-  struct pathelement* p=pathlist;
-  while (p) {
-   sprintf(cmd, "%s/gcc", p->element);
-   if (access(cmd, F_OK) == 0) {
-     list[ind] = cmd;
-     ind++;
-   }
-   p = p->next;
-  }*/
-
 } /* where() */
 
 
