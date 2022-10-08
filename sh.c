@@ -71,9 +71,16 @@ int sh( int argc, char **argv, char **envp )
 	}
 	else if (strcmp(command,"which") == 0)
 	{
+	//  which(args[0],args[1]);
+	    args[0] = NULL;
+	    args[1] = NULL;
 	}
 	else if (strcmp(command,"where") == 0)
 	{
+	    char *whereamI = where(args[1],pathlist);
+      printf("%s\n", whereamI);
+	    args[0] = NULL;
+	    args[1] = NULL;
 	}
 	else if (strcmp(command,"cd") == 0)
 	{
@@ -87,7 +94,6 @@ int sh( int argc, char **argv, char **envp )
 	}
 	else if (strcmp(command,"pid") == 0)
 	{
-	    printf("%d\n",getpid());
 	}
 	else if (strcmp(command,"kill") == 0)
 	{
@@ -171,10 +177,12 @@ char *where(char *command, struct pathelement *pathlist )
       int pathLen = strlen(findLoaction);
       char *iFoundTheLocation = calloc(pathLen + 1, sizeof(char));
       strncpy(iFoundTheLocation, findLoaction, pathLen);
+      return iFoundTheLocation;
     }
     p = p->next;
   }
   return NULL;
+
 } /* where() */
 
 
@@ -191,6 +199,6 @@ void list ( char *dir )
     }
   }
   closedir(direct);
-  /* see man page for opendir() and readdir() and print out filenames for
-  the directory passed */
 } /* list() */
+
+//pid()?
