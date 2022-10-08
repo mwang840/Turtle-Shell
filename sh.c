@@ -71,18 +71,11 @@ int sh( int argc, char **argv, char **envp )
 	}
 	else if (strcmp(command,"which") == 0)
 	{
-	//  which(args[0],args[1]);
       char *whichIsThis = which(args[1], pathlist);
-      printf("%s\n", whichIsThis);
-	    //args[0] = NULL;
-	    //args[1] = NULL;
 	}
 	else if (strcmp(command,"where") == 0)
 	{
 	    char *whereamI = where(args[1],pathlist);
-      printf("%s\n", whereamI);
-	    //args[0] = NULL;
-	    //args[1] = NULL;
 	}
 	else if (strcmp(command,"cd") == 0)
 	{
@@ -103,7 +96,7 @@ int sh( int argc, char **argv, char **envp )
 	else if (strcmp(command,"prompt") == 0)
 	{
 	    if (args[1]) {
-		prompt = args[1];
+		strcpy(prompt,args[1]);
 	    }
 	    else {
     	        printf("Input prompt prefix: ");
