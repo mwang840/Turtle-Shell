@@ -89,9 +89,16 @@ int sh( int argc, char **argv, char **envp )
 	}
 	else if (strcmp(command,"pid") == 0)
 	{
+	    printf("%d\n",getpid());
 	}
 	else if (strcmp(command,"kill") == 0)
 	{
+	    int arg1;
+	    int arg2;
+	    if (args[1]) arg1 = atoi(args[1]);
+	    if (args[2]) arg2 = atoi(args[2]);
+	    if (arg1 == getpid() || arg2 == getpid()) kill(getpid(),SIGTERM);
+	    else if (arg1 < 0) kill(arg2,arg1);
 	}
 	else if (strcmp(command,"prompt") == 0)
 	{
