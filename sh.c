@@ -72,15 +72,17 @@ int sh( int argc, char **argv, char **envp )
 	else if (strcmp(command,"which") == 0)
 	{
 	//  which(args[0],args[1]);
-	    args[0] = NULL;
-	    args[1] = NULL;
+      char *whichIsThis = which(args[1], pathlist);
+      printf("%s\n", whichIsThis);
+	    //args[0] = NULL;
+	    //args[1] = NULL;
 	}
 	else if (strcmp(command,"where") == 0)
 	{
 	    char *whereamI = where(args[1],pathlist);
       printf("%s\n", whereamI);
-	    args[0] = NULL;
-	    args[1] = NULL;
+	    //args[0] = NULL;
+	    //args[1] = NULL;
 	}
 	else if (strcmp(command,"cd") == 0)
 	{
@@ -118,6 +120,9 @@ int sh( int argc, char **argv, char **envp )
 		envp++;
 	    }
 	}
+  else if(strcmp(command, "list") == 0){
+    (list(args[1]));
+  }
 	else if (strcmp(command,"setenv") == 0)
 	{
 	}
@@ -169,19 +174,27 @@ char *where(char *command, struct pathelement *pathlist )
 	 * It takes in a command (string) and a path struct
 	 */
 {
+  bool foundLocation;
   char *findLoaction = (char*)malloc((sizeof(char) * 100) + 1);
   struct pathelement *p = pathlist;
   while(p != NULL){
     snprintf(findLoaction, 100, "%s/%s", p->element, command);
     if(access(findLoaction, X_OK) == 0){
       int pathLen = strlen(findLoaction);
+      foundLocation = true;
       char *iFoundTheLocation = calloc(pathLen + 1, sizeof(char));
       strncpy(iFoundTheLocation, findLoaction, pathLen);
       return iFoundTheLocation;
     }
-    p = p->next;
+    else{
+      p = p->next;
+    }
   }
-  return NULL;
+  foundLocation = false;
+  free(findLoaction);
+ if(foundLocation == false){
+  return "Error command cannot be found, please try again";
+ }
 
 } /* where() */
 
