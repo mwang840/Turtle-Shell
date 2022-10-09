@@ -51,6 +51,7 @@ int sh( int argc, char **argv, char **envp )
     /* get command line and process */
 	fgets(commandline,MAX_CANON,stdin);
     	commandline[strcspn(commandline,"\n")] = 0;
+	if (strcmp(commandline,"") == 0) continue;
     	command = strtok(commandline," ");
     	i = 0;
     	while (command != NULL) {
@@ -163,6 +164,10 @@ int sh( int argc, char **argv, char **envp )
 	    else if (!args[3]) {
 		    printf("Too many arguments");
 	    }
+	    args[1] = NULL;
+	    args[2] = NULL;
+	    args[3] = NULL;
+
 	}
      /*  else  program to exec */
 	else if (strcmp(which(args[0], pathlist),"Error, command cannot be found, please try again!") != 0){
