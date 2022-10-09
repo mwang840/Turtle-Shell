@@ -97,7 +97,7 @@ int sh( int argc, char **argv, char **envp )
 	//	    printf("No argument case");
 		    chdir(homedir);
 	    }
-	    printf("changing directories");
+//	    printf("changing directories");
 	    owd = pwd;
 	    pwd = getcwd(s,100);
 	    args[1] = NULL;
@@ -165,6 +165,15 @@ int sh( int argc, char **argv, char **envp )
 	    }
 	}
      /*  else  program to exec */
+	else if (strcmp(which(args[0], pathlist),"Error, command cannot be found, please try again!") != 0){
+	    int forkid = fork();
+	    if (forkid == 0) {
+		    execve(which(args[0],pathlist),args,envp);
+	    }
+	    else {
+		    waitpid(forkid,NULL,0);
+	    }
+	}
        /* find it */
        /* do fork(), execve() and waitpid() */
 	else if (args[0]){
