@@ -60,7 +60,7 @@ int sh( int argc, char **argv, char **envp )
       	    i++;
    	}
     /* check for each built in command and implement */
-    	command = strtok(commandline," ");
+	command = strtok(commandline," ");
 	if (strcmp(command,"exit") == 0)
 	{
 	    free(prompt);
@@ -79,6 +79,26 @@ int sh( int argc, char **argv, char **envp )
 	}
 	else if (strcmp(command,"cd") == 0)
 	{
+		printf("In cd");
+	    char s[100];
+	    if (args[1]) {
+	      if (strcmp(args[1],"-") == 0) {
+		    printf("Previous case");
+		chdir(owd);
+	      }
+	      else {
+		    printf("Actual argument case");
+		chdir(args[1]);
+	      }
+	    }
+	    else {
+		    printf("No argument case");
+		    chdir(homedir);
+	    }
+	    printf("changing directories");
+	    owd = pwd;
+	    pwd = getcwd(s,100);
+	    args[1] = NULL;
 	}
 	else if (strcmp(command,"pwd") == 0)
 	{
@@ -129,7 +149,7 @@ int sh( int argc, char **argv, char **envp )
      /*  else  program to exec */
        /* find it */
        /* do fork(), execve() and waitpid() */
-	else {
+	else if (args[0]){
             fprintf(stderr, "%s: Command not found.\n", args[0]);
 	}
   }

@@ -7,7 +7,7 @@ char *which(char *command, struct pathelement *pathlist);
 char *where(char *command, struct pathelement *pathlist);
 void list ( char *dir );
 void printenv(char **envp);
-void chdir(char *dir);
+//void chdir(char *dir);
 
 #define PROMPTMAX 32
 #define MAXARGS 10
