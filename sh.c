@@ -72,27 +72,29 @@ int sh( int argc, char **argv, char **envp )
 	else if (strcmp(command,"which") == 0)
 	{
       char *whichIsThis = which(args[1], pathlist);
+      args[1] = NULL;
 	}
 	else if (strcmp(command,"where") == 0)
 	{
 	    char *whereamI = where(args[1],pathlist);
+	    args[1] = NULL;
 	}
 	else if (strcmp(command,"cd") == 0)
 	{
-		printf("In cd");
+	//	printf("In cd");
 	    char s[100];
 	    if (args[1]) {
 	      if (strcmp(args[1],"-") == 0) {
-		    printf("Previous case");
+	//	    printf("Previous case");
 		chdir(owd);
 	      }
 	      else {
-		    printf("Actual argument case");
+	//	    printf("Actual argument case");
 		chdir(args[1]);
 	      }
 	    }
 	    else {
-		    printf("No argument case");
+	//	    printf("No argument case");
 		    chdir(homedir);
 	    }
 	    printf("changing directories");
@@ -103,9 +105,6 @@ int sh( int argc, char **argv, char **envp )
 	else if (strcmp(command,"pwd") == 0)
 	{
 	    printf("%s\n",pwd);
-	}
-	else if (strcmp(command,"list") == 0)
-	{
 	}
 	else if (strcmp(command,"pid") == 0)
 	{
@@ -119,6 +118,8 @@ int sh( int argc, char **argv, char **envp )
 	    if (args[2]) arg2 = atoi(args[2]);
 	    if (arg1 == getpid() || arg2 == getpid()) kill(getpid(),SIGTERM);
 	    else if (arg1 < 0) kill(arg2,arg1);
+	    args[1] = NULL;
+	    args[2] = NULL;
 	}
 	else if (strcmp(command,"prompt") == 0)
 	{
@@ -134,17 +135,34 @@ int sh( int argc, char **argv, char **envp )
     	}
 	else if (strcmp(command,"printenv") == 0)
 	{
+	    if (args[1]) printf("%s\n",getenv(args[1]));
 	    while(*envp != 0) {
 		char* temp = *envp;
 		printf("%s\n",temp);
 		envp++;
 	    }
+	    args[1] = NULL;
+	    args[2] = NULL;
 	}
   else if(strcmp(command, "list") == 0){
     (list(args[1]));
+    args[1] = NULL;
   }
 	else if (strcmp(command,"setenv") == 0)
 	{
+	    if (!args[1]) {
+		while(*envp != 0) {
+                char* temp = *envp;
+                printf("%s\n",temp);
+                envp++;
+            	}
+	    }
+	    else if (!args[2]) {
+		setenv(args[1],"",1);
+	    }
+	    else if (!args[3]) {
+		    printf("Too many arguments");
+	    }
 	}
      /*  else  program to exec */
        /* find it */
