@@ -50,6 +50,7 @@ int sh( int argc, char **argv, char **envp )
 
     /* get command line and process */
 	fgets(commandline,MAX_CANON,stdin);
+	clearerr(stdin);
     	commandline[strcspn(commandline,"\n")] = 0;
 	if (strcmp(commandline,"") == 0) continue;
     	command = strtok(commandline," ");
