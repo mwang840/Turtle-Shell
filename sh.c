@@ -137,10 +137,12 @@ int sh( int argc, char **argv, char **envp )
 	else if (strcmp(command,"printenv") == 0)
 	{
 	    if (args[1]) printf("%s\n",getenv(args[1]));
+	    else {
 	    while(*envp != 0) {
 		char* temp = *envp;
 		printf("%s\n",temp);
 		envp++;
+	    }
 	    }
 	    args[1] = NULL;
 	    args[2] = NULL;
