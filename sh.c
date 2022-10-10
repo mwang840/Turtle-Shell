@@ -64,6 +64,7 @@ int sh( int argc, char **argv, char **envp )
 	command = strtok(commandline," ");
 	if (strcmp(command,"exit") == 0)
 	{
+		printf("Executing built-in exit\n");
 	    free(prompt);
 	    free(commandline);
 	    free(args);
@@ -72,16 +73,19 @@ int sh( int argc, char **argv, char **envp )
 	}
 	else if (strcmp(command,"which") == 0)
 	{
+		printf("Executing built-in which\n");
       char *whichIsThis = which(args[1], pathlist);
       args[1] = NULL;
 	}
 	else if (strcmp(command,"where") == 0)
 	{
+		printf("Executing built-in where\n");
 	    char *whereamI = where(args[1],pathlist);
 	    args[1] = NULL;
 	}
 	else if (strcmp(command,"cd") == 0)
 	{
+		printf("Executing built-in cd\n");
 	//	printf("In cd");
 	    char s[100];
 	    if (args[1]) {
@@ -105,14 +109,17 @@ int sh( int argc, char **argv, char **envp )
 	}
 	else if (strcmp(command,"pwd") == 0)
 	{
+		printf("Executing built-in pwd\n");
 	    printf("%s\n",pwd);
 	}
 	else if (strcmp(command,"pid") == 0)
 	{
+		printf("Executing built-in pid");
 	    printf("%d\n",getpid());
 	}
 	else if (strcmp(command,"kill") == 0)
 	{
+		printf("Executing built-in kill\n");
 	    int arg1;
 	    int arg2;
 	    if (args[1]) arg1 = atoi(args[1]);
@@ -124,6 +131,7 @@ int sh( int argc, char **argv, char **envp )
 	}
 	else if (strcmp(command,"prompt") == 0)
 	{
+		printf("Executing built-in prompt\n");
 	    if (args[1]) {
 		strcpy(prompt,args[1]);
 	    }
@@ -136,6 +144,7 @@ int sh( int argc, char **argv, char **envp )
     	}
 	else if (strcmp(command,"printenv") == 0)
 	{
+		printf("Executing built-in printenv\n");
 	    if (args[1]) printf("%s\n",getenv(args[1]));
 	    else {
 	    while(*envp != 0) {
@@ -148,11 +157,13 @@ int sh( int argc, char **argv, char **envp )
 	    args[2] = NULL;
 	}
   else if(strcmp(command, "list") == 0){
+	  printf("Executing built-in list\n");
     (list(args[1]));
     args[1] = NULL;
   }
 	else if (strcmp(command,"setenv") == 0)
 	{
+		printf("Executing built-in setenv\n");
 	    if (!args[1]) {
 		while(*envp != 0) {
                 char* temp = *envp;
@@ -180,7 +191,8 @@ int sh( int argc, char **argv, char **envp )
 	}
      /*  else  program to exec */
 	else if (strcmp(which(args[0], pathlist),"Error, command cannot be found, please try again!") != 0){
-	    int forkid = fork();
+	    printf("Executing %s\n",which(args[0],pathlist));
+		int forkid = fork();
 	    if (forkid == 0) {
 		    execve(which(args[0],pathlist),args,envp);
 	    }
