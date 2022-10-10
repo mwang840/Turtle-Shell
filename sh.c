@@ -161,8 +161,15 @@ int sh( int argc, char **argv, char **envp )
 	    else if (!args[2]) {
 		setenv(args[1],"",1);
 	    }
-	    else if (!args[3]) {
-		    printf("Too many arguments");
+	    else if (args[3]) {
+		    printf("Too many arguments\n");
+	    }
+	    else {
+		    setenv(args[1],args[2],1);
+		    if (strcmp(args[1],"HOME") == 0) strcpy(homedir,args[2]);
+		    else if (strcmp(args[1],"PATH") == 0) {
+			    strcpy(pwd,args[2]);
+		    }
 	    }
 	    args[1] = NULL;
 	    args[2] = NULL;
