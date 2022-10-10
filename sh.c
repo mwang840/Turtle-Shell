@@ -30,7 +30,7 @@ int sh( int argc, char **argv, char **envp )
   homedir = password_entry->pw_dir;		/* Home directory to start
 						  out with*/
      
-  if ( (pwd = getcwd(NULL, PATH_MAX+1)) == NULL )
+  if ( (pwd = getcwd(NULL, PATH_MAX+1)) == NULL ) //THIS MALLOCS BUT DOESNT FREE FOR SOME REASON??
   {
     perror("getcwd");
     exit(2);
@@ -68,7 +68,16 @@ int sh( int argc, char **argv, char **envp )
 	    free(prompt);
 	    free(commandline);
 	    free(args);
+	    //free(pwd);
 	    free(owd);
+	    struct pathelement* temp = pathlist;
+	    struct pathelement* temp2 = temp;
+	    free(temp->element);
+	    while (temp) {
+		    temp2 = temp->next;
+		    free(temp);
+		    temp = temp2;
+	    }
 	    go = 0;
 	}
 	else if (strcmp(command,"which") == 0)
@@ -166,6 +175,9 @@ int sh( int argc, char **argv, char **envp )
 	    }
 	    else if (!args[3]) {
 		    printf("Too many arguments");
+	    }
+	    else {
+		    setenv(args[1],args[2],1);
 	    }
 	    args[1] = NULL;
 	    args[2] = NULL;
